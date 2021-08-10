@@ -1,11 +1,9 @@
-from django.urls import path
+from django.urls import path, include
 from django.urls.resolvers import URLPattern
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 
-app_name = "account"
-
 urlpatterns = [
-    # path("", views.homepage, name = "homepage"),
-    
-    path("register", views.register_request, name = "register")
+    path("", views.index, name = "index"),
 ]
