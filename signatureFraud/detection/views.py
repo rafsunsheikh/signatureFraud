@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 import numpy as np # linear algebra
 from numpy import asarray
 from numpy import savetxt
@@ -19,7 +20,14 @@ from sklearn.preprocessing import label_binarize
 from sklearn.multiclass import OneVsRestClassifier
 from scipy import interp
 from sklearn.metrics import roc_auc_score
+from sklearn.model_selection import train_test_split
+from tensorflow.keras.utils import to_categorical
+from keras.applications.vgg16 import VGG16, preprocess_input
+from tensorflow.keras import Sequential
+from keras import layers
+from tensorflow.keras.layers import Flatten,Dense
 import os
+import csv
 from os import listdir
 from tensorflow.keras.preprocessing.image import load_img,img_to_array
 print("Load Successful")
@@ -37,7 +45,7 @@ def add_signature(request):
     # file4 = open(r'static/dataset.txt', 'r')
     # dataset = str(file4.read())
     # file4.close()
-    # dataset = pd.read_csv(r"static/dataset.csv")
+    dataset = pd.read_csv(r"static/dataset.csv", error_bad_lines=False)
 
     #####Create Dataset#######
     dataset_dir = r"static/preprocessed_data/"
@@ -61,6 +69,7 @@ def add_signature(request):
     #person_01 = os.listdir (r"static\Real\person_01")
     name = 'person_0{}'.format(number)
     image_list = os.listdir(r'static/Real/{}'.format(name))
+    print(image_list)
     dataset = create_dataset(image_list,number)
     print("dataset create Successful")
     print(dataset)
@@ -77,10 +86,93 @@ def add_signature(request):
     # file3 = open(r'static/dataset.txt', 'w')
     # file3.write(str(dataset))
     # file3.close()
-    savetxt(r'static/dataset.csv', dataset, fmt='%s', delimiter=',')
+    # savetxt(r'static/dataset.csv', dataset, delimiter=',', fmt='%s',)
+    with open(r'static/dataset.csv', 'a') as fd:
+        # fd.write(dataset)
+        writer = csv.writer(fd)
+        writer.writerow(dataset)
     print("dataset write Successful")
-    return dataset
+    messages.success(request, f' Signature added successfully!')
+    return redirect('index')
 
 ################## CHECK SIGNATURE #####################
 def check_signature(request):
-    a = 10
+    dataset = pd.read_csv(r"static/dataset.csv", error_bad_lines=False)
+
+    image_size=224
+    x = np.array([i[0] for i in dataset]).reshape(-1,image_size,image_size,3)
+    y = np.array([i[1] for i in dataset])
+    # x_train,x_test,y_train,y_test = train_test_split(x,y,test_size=0.2)
+    x_train1,x_test1,y_train1,y_test1 = train_test_split(x,y,test_size=0.2)
+
+    # #Dimension of the dataset
+    # print((x_train.shape,y_train.shape))
+    # # print((x_val.shape,y_val.shape))
+    # print((x_test.shape,y_test.shape))
+    #Dimension of the dataset
+    print((x_train1.shape,y_train1.shape))
+    # print((x_val.shape,y_val.shape))
+    print((x_test1.shape,y_test1.shape))
+
+    #y_train=to_categorical(y_train)
+    # y_test=to_categorical(y_test)
+    y_train1 = to_categorical(y_train1)
+    y_test1 = to_categorical(y_test1)
+
+    # #Dimension of the dataset
+    # print((x_train.shape,y_train.shape))
+    # # print((x_val.shape,y_val.shape))
+    # print((x_test.shape,y_test.shape))
+    #Dimension of the dataset
+    print((x_train1.shape,y_train1.shape))
+    # print((x_val.shape,y_val.shape))
+    print((x_test1.shape,y_test1.shape))
+
+    #Image Data Augmentation
+    train_generator = ImageDataGenerator(rotation_range=2, horizontal_flip=True, zoom_range=.1)
+
+    test_generator = ImageDataGenerator(rotation_range=2, horizontal_flip= True, zoom_range=.1)
+
+    #Fitting the augmentation defined above to the data
+    train_generator.fit(x_train1)
+    test_generator.fit(x_test1)
+
+    vgg16_weight_path = r'static/vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5'
+    vgg = VGG16(
+        weights=vgg16_weight_path,
+        include_top=False, 
+        input_shape=(224,224,3)
+    )
+
+    for layer in vgg.layers:
+        layer.trainable = False
+
+    model = Sequential()
+    model.add(vgg)
+    model.add(Dense(256, activation='relu'))
+    model.add(layers.Dropout(rate=0.5))
+    model.add(Dense(128, activation='sigmoid'))
+    model.add(layers.Dropout(rate=0.2))
+    model.add(Dense(128, activation='relu'))
+    model.add(layers.Dropout(0.1))
+    model.add(Flatten())
+    model.add(Dense(16,activation="sigmoid"))
+
+    model.compile(optimizer="adam",loss="binary_crossentropy",metrics=["accuracy"])
+
+    # history = model.fit(x_train,y_train,batch_size=32,epochs=80,validation_data=(x_test,y_test))
+    history = model.fit(x_train1,y_train1,batch_size=32,epochs=80,validation_data=(x_test1,y_test1))
+
+
+
+
+
+def remove_signature(request):
+    a = 0
+
+def show_signature_list(request):
+    a = 0
+
+
+
+    

@@ -13,6 +13,9 @@ from django.template import Context
 def index(request):
     return render(request, 'account/index.html', {'title': 'index'})
 
+def user_panel(request):
+    return render(request, 'account/admin_user.html', {'title': 'User Panel'})
+
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -45,7 +48,7 @@ def user_login(request):
         if user is not None:
             form = login(request, user )
             messages.success(request, f' welcome {username}')
-            return redirect('index')
+            return redirect('user-panel')
         else:
             messages.info(request, f'account done not exit please sign in')
     form = AuthenticationForm()

@@ -9,6 +9,6 @@ urlpatterns = [
     path("", views.index, name = "index"),
     path("check_signature", detection_views.check_signature, name = "check-signature"),
     path("add_signature", detection_views.add_signature, name = "add-signature"),
-    # path("remove_signature", detection_views.remove_signature, name = "remove-signature"),
-    # path("show_signature_list", detection_views.show_signature_list, name = "show-signature-list"),
+    path("remove_signature", detection_views.remove_signature, name = "remove-signature"),
+    path("show_signature_list", detection_views.show_signature_list, name = "show-signature-list"),
 ]
