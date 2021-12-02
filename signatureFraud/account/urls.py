@@ -11,4 +11,5 @@ urlpatterns = [
     path("add_signature", detection_views.add_signature, name = "add-signature"),
     path("remove_signature", detection_views.remove_signature, name = "remove-signature"),
     path("show_signature_list", detection_views.show_signature_list, name = "show-signature-list"),
+    path("scan_image", detection_views.scan_image, name = "scan-image"),
 ]

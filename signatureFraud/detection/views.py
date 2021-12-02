@@ -34,6 +34,7 @@ import csv
 from os import listdir
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import load_img,img_to_array
+from . import chequeCrop
 print("Load Successful")
 
 
@@ -250,7 +251,8 @@ def check_signature(request):
     return redirect('index')
 
 
-
+def scan_image(request):
+    chequeCrop.document()
 
 def remove_signature(request):
     a = 0
