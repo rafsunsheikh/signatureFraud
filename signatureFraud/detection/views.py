@@ -234,10 +234,24 @@ def check_signature(request):
     #Fitting the augmentation defined above to the data
     # train_generator.fit(x_train1)
     # test_generator.fit(x_test1)
-    image_path = r'static/preprocessed_data/person_02_001.png'
+#################### Load raw cheque image ######################
+    cheque_image_path = r'static/TrustBank_BD.jpg'
 
-    image = cv2.imread(image_path, cv2.IMREAD_COLOR)
-    image = cv2.resize(image, (image_size, image_size))
+    cheque_image = cv2.imread(cheque_image_path, cv2.IMREAD_COLOR)
+    cheque_image = cv2.resize(cheque_image, (740, 346))
+
+    crop_img = cheque_image[218:282, 493:728]
+    set_save_directory = r'static/'
+    os.chdir(set_save_directory)
+
+    filename = 'savedImage.jpg'
+    cv2.imwrite(filename, crop_img)
+
+######################  Start checking #############################
+    # image_path = r'static/savedImage.jpg'
+    # image_path = crop_img
+    # image = cv2.imread(image_path, cv2.IMREAD_COLOR)
+    image = cv2.resize(crop_img, (image_size, image_size))
 
     image_array = np.array(image)
     x_image = image_array.reshape(-1, image_size, image_size, 3)
