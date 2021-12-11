@@ -86,7 +86,14 @@
   <div class="row">
     {% block start %}
     {% if user.is_authenticated %}
-    <center><h1>welcome, here</h1></center>
+    <center><h1>Welcome</h1>
+    <div class="row button">
+      <a href="{% url 'user-panel' %}">
+      <input type="button" value="Admin Panel">
+    </a>
+  </div>
+</center>
+    
     {% else %}
     <center><h1>log in, plz . . .</h1></center>
     {% endif %}

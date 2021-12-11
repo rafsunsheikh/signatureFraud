@@ -181,6 +181,7 @@ def add_signature(request):
     # with NpyAppendArray(r'static/dataset.npy') as npaa:
     #     npaa.append(dataset)
     with open(r"static/dataset.npy", 'wb') as f:
+        # np.save(f, dataset, allow_pickle=True, fix_imports=True)
         np.save(f, dataset_new, allow_pickle=True, fix_imports=True)
     # textfile = open(r"static/dataset.txt", "w")
     # for row in dataset:
@@ -235,7 +236,7 @@ def check_signature(request):
     # train_generator.fit(x_train1)
     # test_generator.fit(x_test1)
 #################### Load raw cheque image ######################
-    cheque_image_path = r'static/TrustBank_BD.jpg'
+    cheque_image_path = r'static/cheque_image/myImage0.jpg'
 
     cheque_image = cv2.imread(cheque_image_path, cv2.IMREAD_COLOR)
     cheque_image = cv2.resize(cheque_image, (740, 346))
@@ -257,7 +258,7 @@ def check_signature(request):
     x_image = image_array.reshape(-1, image_size, image_size, 3)
 
 
-    new_model = tf.keras.models.load_model(r'static/my_model')
+    new_model = tf.keras.models.load_model('/home/rafsunsheikh/Desktop/signatureFraud/signatureFraud/static/my_model')
     y_image_pred = new_model.predict(x_image)
     y_image_pred = np.argmax(y_image_pred, axis = 1)
     # print(y_image_pred)

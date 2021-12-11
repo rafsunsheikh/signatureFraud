@@ -10,7 +10,7 @@ def document():
     os.chdir(image_dir)
     webCamFeed = True
     pathImage = "1.jpg"
-    cap = cv2.VideoCapture(4)
+    cap = cv2.VideoCapture(0)
     cap.set(10,160)
     heightImg = 640
     widthImg  = 480
@@ -24,6 +24,7 @@ def document():
         if webCamFeed:success, img = cap.read()
         else:img = cv2.imread(pathImage)
         img = cv2.resize(img, (widthImg, heightImg)) # RESIZE IMAGE
+        img = cv2.flip(img, 0) #flip the image in x axis
         imgBlank = np.zeros((heightImg,widthImg, 3), np.uint8) # CREATE A BLANK IMAGE FOR TESTING DEBUGING IF REQUIRED
         imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) # CONVERT IMAGE TO GRAY SCALE
         imgBlur = cv2.GaussianBlur(imgGray, (5, 5), 1) # ADD GAUSSIAN BLUR
@@ -81,6 +82,7 @@ def document():
             cv2.imwrite("myImage"+str(count)+".jpg",imgWarpColored)
             cv2.rectangle(stackedImage, ((int(stackedImage.shape[1] / 2) - 230), int(stackedImage.shape[0] / 2) + 50),
                         (1100, 350), (0, 255, 0), cv2.FILLED)
+                        # (740, 346), (0, 255, 0), cv2.FILLED)
             cv2.putText(stackedImage, "Scan Saved", (int(stackedImage.shape[1] / 2) - 200, int(stackedImage.shape[0] / 2)),
                         cv2.FONT_HERSHEY_DUPLEX, 3, (0, 0, 255), 5, cv2.LINE_AA)
             cv2.imshow('Result', stackedImage)
