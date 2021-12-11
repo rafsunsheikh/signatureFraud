@@ -10,7 +10,7 @@ def document():
     os.chdir(image_dir)
     webCamFeed = True
     pathImage = "1.jpg"
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(4)
     cap.set(10,160)
     heightImg = 640
     widthImg  = 480

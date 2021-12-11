@@ -1,20 +1,35 @@
 {% extends "account/index.html" %}
+{% load static %}
 {% load crispy_forms_tags %}
 {% block start %}
 
- <div class="content-section col-md-8 col-md-offset-2">
-  <center>
-  <form method="POST" style="border: 1px solid black; margin: 4%; padding:10%; border-radius:1%;">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Form | CodingLab</title>
+  <link rel="stylesheet" href="{% static '/css/login.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+</head>
+
+<body>
+  <div class="container">
+    <div class="wrapper">
+  <form method="POST">
     {% csrf_token %}
-    <fieldset class="form-group">
+    <fieldset class ="fas pass">
       {{ form|crispy}}
+      <a class="pass" href="#">Forgot password?</a>
     </fieldset>
-   <center>
-    <button style="background: black; font-size: 2rem; padding:1%;" class="btn btn-outline-info" type="submit"><span class="glyphicon glyphicon-log-in"></span> &nbsp; login</button>
-  </center>
-  <br/>
-  <sub style="text-align: left;"><a href="{% url 'register' %}" style="text-decoration: none; color: blue; padding:2%; cursor:pointer; margin-right:2%;">don't have account,sign up</a></sub>
+    
+    <div class="row button">
+        <input type="submit" value="Login">
+      </a>
+    </div>
+    <div class="signup-link">Not a member? <a href="{% url 'register' %}">Signup now</a></div>
   </form>
-</center>
  </div>
+ </div>
+
+</body>
+
 {% endblock start %}
