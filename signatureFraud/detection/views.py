@@ -258,7 +258,7 @@ def check_signature(request):
     x_image = image_array.reshape(-1, image_size, image_size, 3)
 
 
-    new_model = tf.keras.models.load_model('/home/rafsunsheikh/Desktop/signatureFraud/signatureFraud/static/my_model')
+    new_model = tf.keras.models.load_model(r'static/my_model')
     y_image_pred = new_model.predict(x_image)
     y_image_pred = np.argmax(y_image_pred, axis = 1)
     # print(y_image_pred)
