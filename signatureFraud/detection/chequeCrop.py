@@ -7,16 +7,16 @@ def document():
 
     ########################################################################
     image_dir = r"static/cheque_image/"
-    os.chdir(image_dir)
+    os.chdir(imagedir)
     webCamFeed = True
     pathImage = "1.jpg"
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(0) #Capture Video
     cap.set(10,160)
-    heightImg = 640
+    heightImg = 640 #Resize the camera feed
     widthImg  = 480
     ########################################################################
     
-    utlis.initializeTrackbars()
+    utlis.initializeTrackbars() #Initialize threshold trackbars
     count=0
     
     while True:
