@@ -14,7 +14,7 @@
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>User Panel</title>
 </head>
 
 <body>
@@ -104,9 +104,9 @@
         <div class="box">
           <div class="right-side">
             <div class="box-topic">
-              <a href="{% url 'add-signature' %}" class="button">Add Signature</a>
+              <a href="{% url 'add-signature' %}" class="button">Add Customer Signature</a>
                 </div>
-            <div class="number">301</div>
+            <div class="number">{{ number }}</div>
             <div class="indicator">
               <i class='bx bx-right-arrow-alt'></i>
               <span class="text">Total Customers</span>

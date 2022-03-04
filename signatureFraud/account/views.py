@@ -14,7 +14,14 @@ def index(request):
     return render(request, 'account/index.html', {'title': 'index'})
 
 def user_panel(request):
-    return render(request, 'account/admin_user.html', {'title': 'User Panel'})
+    file = open(r'static/number.txt', 'r')
+    number = int(file.read())
+    file.close()
+    number = number - 1
+    context = {
+        'number': number,
+    }
+    return render(request, 'account/admin_user.html', context=context)
 
 def register(request):
     if request.method == 'POST':

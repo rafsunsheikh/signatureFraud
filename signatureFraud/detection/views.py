@@ -130,19 +130,64 @@ def model_train():
 ################## ADD SIGNATURE #####################
 def add_signature(request):
     
-    ########### Load person number #############
+    # ########### Load person number #############
+    # file = open(r'static/number.txt', 'r')
+    # number = int(file.read())
+    # file.close()
+    # print("number Load Successful")
+
+    # if(number < 10):
+    #     name = 'person_0{}'.format(number)
+    # else:
+    #     name = 'person_{}'.format(number)
+    
+    # image_list = os.listdir(r'static/Real/{}'.format(name))
+    # print(image_list)
+    # dataset = create_dataset(image_list,number)
+    # print("New dataset create Successful")
+    # print(dataset)
+
+    # ############# Load and append with the previous dataset #############
+    # with open(r"static/dataset.npy", 'rb') as f:
+    #     dataset_old = np.load(f, allow_pickle=True)
+
+    # dataset_1 = np.array(dataset_old)
+    # dataset_2 = np.array(dataset)
+
+    # print(dataset_1.shape)
+    # print(dataset_2.shape)
+    
+    
+
+    # dataset_new = np.append(dataset_old, dataset, axis =0)
+    # dataset.clear()
+
+    # ########### Write new person number ############
+    # file2 = open(r'static/number.txt', 'w')
+    # number += 1
+    # file2.write(str(number))
+    # file2.close()
+    
+    # print("number increment Successful")
+
+    # with open(r"static/dataset.npy", 'wb') as f:
+    #     np.save(f, dataset_new, allow_pickle=True, fix_imports=True)
+    # print("dataset write Successful")
+    
+    # model_train()
+        
+    # messages.success(request, f' Signature added successfully!')
+    # return redirect('index')
+
+
+
+    ############## When Dataset null ################
+    ########## Load person number #############
     file = open(r'static/number.txt', 'r')
     number = int(file.read())
     file.close()
     print("number Load Successful")
 
-    ############ Load Dataset data from file ############
-    # file4 = open(r'static/dataset.txt', 'r')
-    # dataset = str(file4.read())
-    # file4.close()
-    # dataset = pd.read_csv(r"static/dataset.csv", error_bad_lines=False)
-
-    #person_01 = os.listdir (r"static\Real\person_01")
     if(number < 10):
         name = 'person_0{}'.format(number)
     else:
@@ -152,22 +197,12 @@ def add_signature(request):
     print(image_list)
     dataset = create_dataset(image_list,number)
     print("New dataset create Successful")
-    # print(dataset)
+    print(dataset)
 
-    ############# Load and append with the previous dataset #############
-    with open(r"static/dataset.npy", 'rb') as f:
-        dataset_old = np.load(f, allow_pickle=True)
-
-    dataset_1 = np.array(dataset_old)
+    ############# Load and append with the previous dataset ############
     dataset_2 = np.array(dataset)
 
-    print(dataset_1.shape)
     print(dataset_2.shape)
-    
-    
-
-    dataset_new = np.append(dataset_old, dataset, axis =0)
-    dataset.clear()
 
     ########### Write new person number ############
     file2 = open(r'static/number.txt', 'w')
@@ -177,68 +212,26 @@ def add_signature(request):
     
     print("number increment Successful")
 
-    ############# Write new dataset data ####################
-    # with NpyAppendArray(r'static/dataset.npy') as npaa:
-    #     npaa.append(dataset)
+    
     with open(r"static/dataset.npy", 'wb') as f:
-        # np.save(f, dataset, allow_pickle=True, fix_imports=True)
-        np.save(f, dataset_new, allow_pickle=True, fix_imports=True)
-    # textfile = open(r"static/dataset.txt", "w")
-    # for row in dataset:
-    #     np.savetxt(textfile, row)
-    # textfile.close()
-    # file3.write(str(dataset))
-    # file3.close()
-    # savetxt(r'static/dataset.csv', dataset, delimiter=',', fmt='%s',)
-    # with open(r'static/dataset.csv', 'a') as fd:
-    #     # fd.write(dataset)
-    #     writer = csv.writer(fd)
-    #     writer.writerow(dataset)
+        np.save(f, dataset, allow_pickle=True, fix_imports=True)
+    
     print("dataset write Successful")
     
-
     model_train()
-    
     
     messages.success(request, f' Signature added successfully!')
     return redirect('index')
 
+
 ################## CHECK SIGNATURE #####################
 def check_signature(request):
-    # dataset = pd.read_csv(r"static/dataset.csv", error_bad_lines=False)
-    # dataset = np.loadtxt(r"static/dataset.txt")
-    # dataset1 = np.array(dataset)
-    
-    # #Dimension of the dataset
-    # print((x_train.shape,y_train.shape))
-    # # print((x_val.shape,y_val.shape))
-    # print((x_test.shape,y_test.shape))
-    #Dimension of the dataset
-    
-
-    #y_train=to_categorical(y_train)
-    # y_test=to_categorical(y_test)
-    
-
-    # #Dimension of the dataset
-    # print((x_train.shape,y_train.shape))
-    # # print((x_val.shape,y_val.shape))
-    # print((x_test.shape,y_test.shape))
-    #Dimension of the dataset
-    
-
-    #Image Data Augmentation
-    # train_generator = ImageDataGenerator(rotation_range=2, horizontal_flip=True, zoom_range=.1)
-
-    # test_generator = ImageDataGenerator(rotation_range=2, horizontal_flip= True, zoom_range=.1)
-
-    #Fitting the augmentation defined above to the data
-    # train_generator.fit(x_train1)
-    # test_generator.fit(x_test1)
+   
 #################### Load raw cheque image ######################
     cheque_image_path = r'static/cheque_image/myImage0.jpg'
 
     cheque_image = cv2.imread(cheque_image_path, cv2.IMREAD_COLOR)
+    # cheque_image = cv2.rotate(cheque_image, cv2.ROTATE_90_COUNTERCLOCKWISE)
     cheque_image = cv2.resize(cheque_image, (740, 346))
 
     crop_img = cheque_image[218:282, 493:728]
@@ -258,9 +251,11 @@ def check_signature(request):
     x_image = image_array.reshape(-1, image_size, image_size, 3)
 
 
-    new_model = tf.keras.models.load_model(r'static/my_model')
+    new_model = tf.keras.models.load_model(r'my_model')
     y_image_pred = new_model.predict(x_image)
+    print("Y image pred:", y_image_pred)
     y_image_pred = np.argmax(y_image_pred, axis = 1)
+    print("Y image pred final:", y_image_pred)
     # print(y_image_pred)
     messages.success(request, ' Signature matched successfully with {}'.format(y_image_pred) )
     return redirect('index')
