@@ -231,6 +231,7 @@ def check_signature(request):
     cheque_image_path = r'static/cheque_image/myImage0.jpg'
 
     cheque_image = cv2.imread(cheque_image_path, cv2.IMREAD_COLOR)
+    cheque_image = cv2.flip(cheque_image, 1)
     # cheque_image = cv2.rotate(cheque_image, cv2.ROTATE_90_COUNTERCLOCKWISE)
     cheque_image = cv2.resize(cheque_image, (740, 346))
 

@@ -7,10 +7,10 @@ def document():
 
     ########################################################################
     image_dir = r"static/cheque_image/"
-    os.chdir(imagedir)
+    os.chdir(image_dir)
     webCamFeed = True
     pathImage = "1.jpg"
-    cap = cv2.VideoCapture(0) #Capture Video
+    cap = cv2.VideoCapture(4) #Capture Video
     cap.set(10,160)
     heightImg = 640 #Resize the camera feed
     widthImg  = 480
