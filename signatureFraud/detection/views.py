@@ -131,58 +131,6 @@ def model_train():
 def add_signature(request):
     
     # ########### Load person number #############
-    # file = open(r'static/number.txt', 'r')
-    # number = int(file.read())
-    # file.close()
-    # print("number Load Successful")
-
-    # if(number < 10):
-    #     name = 'person_0{}'.format(number)
-    # else:
-    #     name = 'person_{}'.format(number)
-    
-    # image_list = os.listdir(r'static/Real/{}'.format(name))
-    # print(image_list)
-    # dataset = create_dataset(image_list,number)
-    # print("New dataset create Successful")
-    # print(dataset)
-
-    # ############# Load and append with the previous dataset #############
-    # with open(r"static/dataset.npy", 'rb') as f:
-    #     dataset_old = np.load(f, allow_pickle=True)
-
-    # dataset_1 = np.array(dataset_old)
-    # dataset_2 = np.array(dataset)
-
-    # print(dataset_1.shape)
-    # print(dataset_2.shape)
-    
-    
-
-    # dataset_new = np.append(dataset_old, dataset, axis =0)
-    # dataset.clear()
-
-    # ########### Write new person number ############
-    # file2 = open(r'static/number.txt', 'w')
-    # number += 1
-    # file2.write(str(number))
-    # file2.close()
-    
-    # print("number increment Successful")
-
-    # with open(r"static/dataset.npy", 'wb') as f:
-    #     np.save(f, dataset_new, allow_pickle=True, fix_imports=True)
-    # print("dataset write Successful")
-    
-    # model_train()
-        
-    # messages.success(request, f' Signature added successfully!')
-    # return redirect('index')
-
-
-
-    ############## When Dataset null ################
-    ########## Load person number #############
     file = open(r'static/number.txt', 'r')
     number = int(file.read())
     file.close()
@@ -199,10 +147,20 @@ def add_signature(request):
     print("New dataset create Successful")
     print(dataset)
 
-    ############# Load and append with the previous dataset ############
+    ############# Load and append with the previous dataset #############
+    with open(r"static/dataset.npy", 'rb') as f:
+        dataset_old = np.load(f, allow_pickle=True)
+
+    dataset_1 = np.array(dataset_old)
     dataset_2 = np.array(dataset)
 
+    print(dataset_1.shape)
     print(dataset_2.shape)
+    
+    
+
+    dataset_new = np.append(dataset_old, dataset, axis =0)
+    dataset.clear()
 
     ########### Write new person number ############
     file2 = open(r'static/number.txt', 'w')
@@ -212,22 +170,69 @@ def add_signature(request):
     
     print("number increment Successful")
 
-    
     with open(r"static/dataset.npy", 'wb') as f:
-        np.save(f, dataset, allow_pickle=True, fix_imports=True)
-    
+        np.save(f, dataset_new, allow_pickle=True, fix_imports=True)
     print("dataset write Successful")
     
     model_train()
-    
+        
     messages.success(request, f' Signature added successfully!')
     return redirect('index')
+
+
+
+    ############## When Dataset null ################
+    ########## Load person number #############
+    # file = open(r'static/number.txt', 'r')
+    # number = int(file.read())
+    # file.close()
+    # print("number Load Successful")
+
+    # if(number < 10):
+    #     name = 'person_0{}'.format(number)
+    # else:
+    #     name = 'person_{}'.format(number)
+    
+    # image_list = os.listdir(r'static/Real/{}'.format(name))
+    # print(image_list)
+    # dataset = create_dataset(image_list,number)
+    # print("New dataset create Successful")
+    # print(dataset)
+
+    # ############# Load and append with the previous dataset ############
+    # dataset_2 = np.array(dataset)
+
+    # print(dataset_2.shape)
+
+    # ########### Write new person number ############
+    # file2 = open(r'static/number.txt', 'w')
+    # number += 1
+    # file2.write(str(number))
+    # file2.close()
+    
+    # print("number increment Successful")
+
+    
+    # with open(r"static/dataset.npy", 'wb') as f:
+    #     np.save(f, dataset, allow_pickle=True, fix_imports=True)
+    
+    # print("dataset write Successful")
+    
+    # model_train()
+    
+    # messages.success(request, f' Signature added successfully!')
+    # return redirect('index')
 
 
 ################## CHECK SIGNATURE #####################
 def check_signature(request):
    
 #################### Load raw cheque image ######################
+    file = open(r'static/number.txt', 'r')
+    number = int(file.read())
+    number = number - 1 
+    file.close()
+
     cheque_image_path = r'static/cheque_image/myImage0.jpg'
 
     cheque_image = cv2.imread(cheque_image_path, cv2.IMREAD_COLOR)
@@ -258,8 +263,12 @@ def check_signature(request):
     y_image_pred = np.argmax(y_image_pred, axis = 1)
     print("Y image pred final:", y_image_pred)
     # print(y_image_pred)
-    messages.success(request, ' Signature matched successfully with {}'.format(y_image_pred) )
-    return redirect('index')
+    if y_image_pred == number:
+        messages.success(request, ' Signature does not matched!' )
+        return redirect('index')    
+    else:
+        messages.success(request, ' Signature matched successfully with {}'.format(y_image_pred) )
+        return redirect('index')
 
 
 def scan_image(request):

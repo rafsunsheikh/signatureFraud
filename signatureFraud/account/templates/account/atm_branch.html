@@ -1,0 +1,180 @@
+{% extends "account/index.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block start %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>ATM Branch Location</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<!-- <link rel="icon" type="image/png" href="images/icons/favicon.ico"/> -->
+<!--===============================================================================================-->
+	<!-- <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css"> -->
+<!--===============================================================================================-->
+	<!-- <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css"> -->
+<!--===============================================================================================-->
+	<!-- <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css"> -->
+<!--===============================================================================================-->
+	<!-- <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css"> -->
+<!--===============================================================================================-->
+	<!-- <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css"> -->
+<!--===============================================================================================-->
+	<link rel="stylesheet" href="{% static 'css/atm_branch.css' %}">
+    <link rel="stylesheet" href="{% static 'css/adminstyle.css' %}">
+<!--===============================================================================================-->
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<div class="table100 ver1">
+					<div class="table100-firstcol">
+						<table>
+							<thead>
+								<tr class="row100 head">
+									<th class="cell100 column1">NAME</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="row100 body">
+									<td class="cell100 column1">Zia Colony ATM</td>
+								</tr>
+
+								<tr class="row100 body">
+									<td class="cell100 column1">Sylhet Cantt SM Barrack ATM</td>
+								</tr>
+
+								<tr class="row100 body">
+									<td class="cell100 column1">Signal Base Workshop ATM</td>
+								</tr>
+
+								<tr class="row100 body">
+									<td class="cell100 column1">Shomver Super Market ATM</td>
+								</tr>
+
+								<tr class="row100 body">
+									<td class="cell100 column1">Sheikh Hasina Cantt Branch ATM1</td>
+								</tr>
+
+								<tr class="row100 body">
+									<td class="cell100 column1">Savar Military Firm ATM</td>
+								</tr>
+
+								<tr class="row100 body">
+									<td class="cell100 column1">Rangpur Cantt Branch ATM</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					
+					<div class="wrap-table100-nextcols js-pscroll">
+						<div class="table100-nextcols">
+							<table>
+								<thead>
+									<tr class="row100 head">
+										<th class="cell100 column2">ADDRESS</th>
+										<th class="cell100 column3">DIVISION</th>
+										<th class="cell100 column4">DISTRICT</th>
+										<th class="cell100 column5">THANA</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="row100 body">
+										<td class="cell100 column2">Zia Colony, Dhaka Cantt</td>
+										<td class="cell100 column3">Dhaka</td>
+										<td class="cell100 column4">Dhaka North</td>
+										<td class="cell100 column5">Cantonment</td>
+									</tr>
+
+									<tr class="row100 body">
+										<td class="cell100 column2">SM Barrack, Sylhet Cantt</td>
+										<td class="cell100 column3">Sylhet</td>
+										<td class="cell100 column4">Sylhet</td>
+										<td class="cell100 column5">Kotwali</td>
+									</tr>
+
+									<tr class="row100 body">
+										<td class="cell100 column2">11 Signal Battalion</td>
+										<td class="cell100 column3">Dhaka</td>
+										<td class="cell100 column4">Dhaka North</td>
+										<td class="cell100 column5">Cantonment</td>
+									</tr>
+
+									<tr class="row100 body">
+										<td class="cell100 column2">Shomver Super Market</td>
+										<td class="cell100 column3">Khulna</td>
+										<td class="cell100 column4">Jashore</td>
+										<td class="cell100 column5">Kotwali</td>
+									</tr>
+
+									<tr class="row100 body">
+										<td class="cell100 column2">Sheikh Hasina Cantt</td>
+										<td class="cell100 column3">Barishal</td>
+										<td class="cell100 column4">Barishal</td>
+										<td class="cell100 column5">Bakerganj</td>
+									</tr>
+
+									<tr class="row100 body">
+										<td class="cell100 column2">Savar Military Firm</td>
+										<td class="cell100 column3">Dhaka</td>
+										<td class="cell100 column4">Dhaka North</td>
+										<td class="cell100 column5">Savar</td>
+									</tr>
+
+									<tr class="row100 body">
+										<td class="cell100 column2">Rangpur Cantt</td>
+										<td class="cell100 column3">Rangpur</td>
+										<td class="cell100 column4">Rangpur</td>
+										<td class="cell100 column5">Kotwali</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+<!--===============================================================================================-->	
+	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/bootstrap/js/popper.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script>
+		$('.js-pscroll').each(function(){
+			var ps = new PerfectScrollbar(this);
+
+			$(window).on('resize', function(){
+				ps.update();
+			})
+
+			$(this).on('ps-x-reach-start', function(){
+				$(this).parent().find('.table100-firstcol').removeClass('shadow-table100-firstcol');
+			});
+
+			$(this).on('ps-scroll-x', function(){
+				$(this).parent().find('.table100-firstcol').addClass('shadow-table100-firstcol');
+			});
+
+		});
+
+		
+		
+		
+	</script>
+<!--===============================================================================================-->
+	<script src="js/main.js"></script>
+
+</body>
+
+{% endblock %}

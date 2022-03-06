@@ -9,17 +9,33 @@ from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.template import Context
+import os
 
 def index(request):
-    return render(request, 'account/index.html', {'title': 'index'})
+    return render(request, 'account/home.html', {'title': 'index'})
+
+def atm_branch(request):
+    return render(request, 'account/atm_branch.html', {'title':'ATM Branches'})
+
+def contact_us(request):
+    return render(request, 'account/contact_us.html', {'title':'Contact Us'})
+
+def about_us(request):
+    return render(request, 'account/about_us.html', {'title':'About Us'})
+
 
 def user_panel(request):
+    # set_save_directory = r'static/'
+    # os.chdir(set_save_directory)
+
     file = open(r'static/number.txt', 'r')
     number = int(file.read())
     file.close()
     number = number - 1
+
     context = {
         'number': number,
+        'title': 'User Panel'
     }
     return render(request, 'account/admin_user.html', context=context)
 
