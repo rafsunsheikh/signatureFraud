@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('account.urls')),
     path('login/', account_view.user_login, name ='login'),
-    path('logout/', auth.LogoutView.as_view(template_name ='account/index.html'), name ='logout'),
+    path('logout/', auth.LogoutView.as_view(template_name ='account/home.html'), name ='logout'),
     path('register/', account_view.register, name ='register'),
     path('user_panel/', account_view.user_panel, name ='user-panel'),
 ]

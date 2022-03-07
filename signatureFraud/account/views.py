@@ -12,7 +12,7 @@ from django.template import Context
 import os
 
 def index(request):
-    return render(request, 'account/home.html', {'title': 'index'})
+    return render(request, 'account/home.html', {'title': 'Home'})
 
 def atm_branch(request):
     return render(request, 'account/atm_branch.html', {'title':'ATM Branches'})
@@ -72,7 +72,7 @@ def user_login(request):
         if user is not None:
             form = login(request, user )
             messages.success(request, f' welcome {username}')
-            return redirect('user-panel')
+            return redirect('index')
         else:
             messages.info(request, f'account done not exit please sign in')
     form = AuthenticationForm()

@@ -17,6 +17,7 @@
 </head>
 
 <body>
+  <!-- <div class="site-blocks-cover overlay" style="background-image: url(../../staic/images/hero_2.jpg);" data-aos="fade" id="home-section"> -->
   <!-- <div class="btn-group home container d-flex align-items-center justify-content-center">
     <a href="{% url 'add-signature' %}" class="button">Add Signature</a>
     <a href="{% url 'check-signature' %}" class="button">Check Signature</a>
@@ -74,7 +75,7 @@
           </a>
         </li>
         <li class="log_out">
-          <a href="login.html">
+          <a href="{% url "logout" %}">
             <i class='bx bx-log-out'></i>
             <span class="links_name">Log out</span>
           </a>
@@ -92,7 +93,7 @@
         <i class='bx bx-search' ></i>
       </div>
       <div class="profile-details">
-        <img src="images/profile.jpg" alt="">
+        <img src="{% static 'Images/profile.jpg' %}" alt="">
         <span class="admin_name">Welcome Hasan</span>
         <i class='bx bx-chevron-down' ></i>
       </div>
@@ -170,15 +171,15 @@
             </ul>
             <ul class="details">
             <li class="topic">Customer</li>
-            <li><a href="Images/Naimur Rahman.jpeg">Naimur Rahman</a></li>
-            <li><a href="Images/Riashat Bin Ferdaus.jpeg">Riashat Bin Ferdaus</a></li>
-            <li><a href="Images/Rizwanul Haque.jpeg">Rizwanul Haque</a></li>
-            <li><a href="Images/Sakib Shahriar.jpeg">Sakib Shahriar</a></li>
-            <li><a href="Images/Sifat Shahria.jpeg">Sifat Shahria</a></li>
-            <li><a href="Images/Tanvir Nahiyan Swapnil.jpeg">Tanvir Nahiyan Swapnil</a></li>
-            <li><a href="Images/Taslimul Hasan Akash">Taslimul Hasan Akash</a></li>
-            <li><a href="Images/Usabbir Ahmed Shakil.jpeg">Usabbir Ahmed Shakil</a></li>
-             <li><a href="Images/Yaminul Islam Enan.jpeg">Yaminul Islam Enan</a></li>
+            <li><a href="{% static 'Images/NaimurRahman.jpeg' %}">Naimur Rahman</a></li>
+            <li><a href="{% static 'Images/Riashat Bin Ferdaus.jpeg' %}">Riashat Bin Ferdaus</a></li>
+            <li><a href="{% static 'Images/Rizwanul Haque.jpeg' %}">Rizwanul Haque</a></li>
+            <li><a href="{% static 'Images/Sakib Shahriar.jpeg' %}">Sakib Shahriar</a></li>
+            <li><a href="{% static 'Images/Sifat Shahria.jpeg' %}">Sifat Shahria</a></li>
+            <li><a href="{% static 'Images/Tanvir Nahiyan Swapnil.jpeg' %}">Tanvir Nahiyan Swapnil</a></li>
+            <li><a href="{% static 'Images/Taslimul Hasan Akash' %}">Taslimul Hasan Akash</a></li>
+            <li><a href="{% static 'Images/Usabbir Ahmed Shakil.jpeg' %}">Usabbir Ahmed Shakil</a></li>
+             <li><a href="{% static 'Images/Yaminul Islam Enan.jpeg' %}">Yaminul Islam Enan</a></li>
           </ul>
           <ul class="details">
             <li class="topic">Status</li>
@@ -284,7 +285,6 @@ sidebarBtn.onclick = function() {
   sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
 }
  </script>
-
 </body>
 
 {% endblock %}
