@@ -28,7 +28,7 @@ def user_panel(request):
     # set_save_directory = r'static/'
     # os.chdir(set_save_directory)
 
-    file = open(r'static/number.txt', 'r')
+    file = open(r'/home/rafsunsheikh/Desktop/signatureFraud/signatureFraud/detection/number.txt', 'r')
     number = int(file.read())
     file.close()
     number = number - 1

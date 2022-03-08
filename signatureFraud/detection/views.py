@@ -63,7 +63,7 @@ def create_dataset(image_category,label):
 
 ############################## Train model ################################
 def model_train():
-    file = open(r'static/number.txt', 'r')
+    file = open(r'/home/rafsunsheikh/Desktop/signatureFraud/signatureFraud/detection/number.txt', 'r')
     number = int(file.read())
     file.close()
 
@@ -131,7 +131,7 @@ def model_train():
 def add_signature(request):
     
     # ########### Load person number #############
-    file = open(r'static/number.txt', 'r')
+    file = open(r'/home/rafsunsheikh/Desktop/signatureFraud/signatureFraud/detection/number.txt', 'r')
     number = int(file.read())
     file.close()
     print("number Load Successful")
@@ -163,7 +163,7 @@ def add_signature(request):
     dataset.clear()
 
     ########### Write new person number ############
-    file2 = open(r'static/number.txt', 'w')
+    file2 = open(r'/home/rafsunsheikh/Desktop/signatureFraud/signatureFraud/detection/number.txt', 'w')
     number += 1
     file2.write(str(number))
     file2.close()
@@ -183,7 +183,7 @@ def add_signature(request):
 
     ############## When Dataset null ################
     ########## Load person number #############
-    # file = open(r'static/number.txt', 'r')
+    # file = open(r'/home/rafsunsheikh/Desktop/signatureFraud/signatureFraud/detection/number.txt', 'r')
     # number = int(file.read())
     # file.close()
     # print("number Load Successful")
@@ -205,7 +205,7 @@ def add_signature(request):
     # print(dataset_2.shape)
 
     # ########### Write new person number ############
-    # file2 = open(r'static/number.txt', 'w')
+    # file2 = open(r'/home/rafsunsheikh/Desktop/signatureFraud/signatureFraud/detection/number.txt', 'w')
     # number += 1
     # file2.write(str(number))
     # file2.close()
@@ -228,7 +228,7 @@ def add_signature(request):
 def check_signature(request):
    
 #################### Load raw cheque image ######################
-    file = open(r'static/number.txt', 'r')
+    file = open(r'/home/rafsunsheikh/Desktop/signatureFraud/signatureFraud/detection/number.txt', 'r')
     number = int(file.read())
     number = number - 1 
     file.close()
@@ -236,22 +236,24 @@ def check_signature(request):
     cheque_image_path = r'static/cheque_image/myImage0.jpg'
 
     cheque_image = cv2.imread(cheque_image_path, cv2.IMREAD_COLOR)
-    cheque_image = cv2.flip(cheque_image, 1)
+    # cheque_image = cv2.flip(cheque_image, 1)
     # cheque_image = cv2.rotate(cheque_image, cv2.ROTATE_90_COUNTERCLOCKWISE)
-    cheque_image = cv2.resize(cheque_image, (740, 346))
+    # cheque_image = cv2.resize(cheque_image, (740, 346))
 
-    crop_img = cheque_image[218:282, 493:728]
+    # crop_img = cheque_image[218:282, 493:728]
     set_save_directory = r'static/'
     os.chdir(set_save_directory)
 
     filename = 'savedImage.jpg'
-    cv2.imwrite(filename, crop_img)
+    # cv2.imwrite(filename, crop_img)
+    cv2.imwrite(filename, cheque_image)
 
 ######################  Start checking #############################
     # image_path = r'static/savedImage.jpg'
     # image_path = crop_img
     # image = cv2.imread(image_path, cv2.IMREAD_COLOR)
-    image = cv2.resize(crop_img, (image_size, image_size))
+    # image = cv2.resize(crop_img, (image_size, image_size))
+    image = cv2.resize(cheque_image, (image_size, image_size))
 
     image_array = np.array(image)
     x_image = image_array.reshape(-1, image_size, image_size, 3)

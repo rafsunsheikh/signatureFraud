@@ -12,8 +12,8 @@ def document():
     pathImage = "1.jpg"
     cap = cv2.VideoCapture(0) #Capture Video
     cap.set(10,160)
-    heightImg = 640 #Resize the camera feed
-    widthImg  = 480
+    heightImg = 812 #Resize the camera feed
+    widthImg  = 1080
     ########################################################################
     
     utlis.initializeTrackbars() #Initialize threshold trackbars
@@ -24,7 +24,7 @@ def document():
         if webCamFeed:success, img = cap.read()
         else:img = cv2.imread(pathImage)
         img = cv2.resize(img, (widthImg, heightImg)) # RESIZE IMAGE
-        img = cv2.flip(img, 0) #flip the image in x axis
+        # img = cv2.flip(img, 0) #flip the image in x axis
         imgBlank = np.zeros((heightImg,widthImg, 3), np.uint8) # CREATE A BLANK IMAGE FOR TESTING DEBUGING IF REQUIRED
         imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) # CONVERT IMAGE TO GRAY SCALE
         imgBlur = cv2.GaussianBlur(imgGray, (5, 5), 1) # ADD GAUSSIAN BLUR
