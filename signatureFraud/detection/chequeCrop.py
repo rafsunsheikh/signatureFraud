@@ -10,10 +10,10 @@ def document():
     os.chdir(image_dir)
     webCamFeed = True
     pathImage = "1.jpg"
-    cap = cv2.VideoCapture(0) #Capture Video
+    cap = cv2.VideoCapture(4) #Capture Video
     cap.set(10,160)
-    heightImg = 812 #Resize the camera feed
-    widthImg  = 1080
+    heightImg = 406 #Resize the camera feed
+    widthImg  = 540
     ########################################################################
     
     utlis.initializeTrackbars() #Initialize threshold trackbars

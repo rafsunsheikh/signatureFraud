@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
+from matplotlib.style import context
 from .forms import UserRegisterForm
 from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
@@ -22,6 +23,9 @@ def contact_us(request):
 
 def about_us(request):
     return render(request, 'account/about_us.html', {'title':'About Us'})
+
+def user(request):
+    return render(request, 'account/user_profile.html', {'title':'User Profile'})
 
 
 def user_panel(request):

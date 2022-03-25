@@ -233,7 +233,7 @@ def check_signature(request):
     number = number - 1 
     file.close()
 
-    cheque_image_path = r'static/cheque_image/myImage0.jpg'
+    cheque_image_path = r'/home/rafsunsheikh/Desktop/signatureFraud/signatureFraud/static/cheque_image/myImage0.jpg'
 
     cheque_image = cv2.imread(cheque_image_path, cv2.IMREAD_COLOR)
     # cheque_image = cv2.flip(cheque_image, 1)
@@ -241,8 +241,8 @@ def check_signature(request):
     # cheque_image = cv2.resize(cheque_image, (740, 346))
 
     # crop_img = cheque_image[218:282, 493:728]
-    set_save_directory = r'static/'
-    os.chdir(set_save_directory)
+    # set_save_directory = r'static/'
+    # os.chdir(set_save_directory)
 
     filename = 'savedImage.jpg'
     # cv2.imwrite(filename, crop_img)
@@ -259,7 +259,7 @@ def check_signature(request):
     x_image = image_array.reshape(-1, image_size, image_size, 3)
 
 
-    new_model = tf.keras.models.load_model(r'my_model')
+    new_model = tf.keras.models.load_model(r'/home/rafsunsheikh/Desktop/signatureFraud/signatureFraud/static/my_model')
     y_image_pred = new_model.predict(x_image)
     print("Y image pred:", y_image_pred)
     y_image_pred = np.argmax(y_image_pred, axis = 1)
@@ -267,10 +267,10 @@ def check_signature(request):
     # print(y_image_pred)
     if y_image_pred == number:
         messages.success(request, ' Signature does not matched!' )
-        return redirect('index')    
+        return redirect('user')    
     else:
-        messages.success(request, ' Signature matched successfully with {}'.format(y_image_pred) )
-        return redirect('index')
+        messages.success(request, ' Signature matched successfully with Person {}'.format(y_image_pred) )
+        return redirect('user')
 
 
 def scan_image(request):
