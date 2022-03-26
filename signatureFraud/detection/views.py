@@ -63,7 +63,7 @@ def create_dataset(image_category,label):
 
 ############################## Train model ################################
 def model_train():
-    file = open(r'/home/rafsunsheikh/Desktop/signatureFraud/signatureFraud/detection/number.txt', 'r')
+    file = open(r'detection/number.txt', 'r')
     number = int(file.read())
     file.close()
 
@@ -131,7 +131,7 @@ def model_train():
 def add_signature(request):
     
     # ########### Load person number #############
-    file = open(r'/home/rafsunsheikh/Desktop/signatureFraud/signatureFraud/detection/number.txt', 'r')
+    file = open(r'detection/number.txt', 'r')
     number = int(file.read())
     file.close()
     print("number Load Successful")
@@ -163,7 +163,7 @@ def add_signature(request):
     dataset.clear()
 
     ########### Write new person number ############
-    file2 = open(r'/home/rafsunsheikh/Desktop/signatureFraud/signatureFraud/detection/number.txt', 'w')
+    file2 = open(r'detection/number.txt', 'w')
     number += 1
     file2.write(str(number))
     file2.close()
@@ -228,12 +228,12 @@ def add_signature(request):
 def check_signature(request):
    
 #################### Load raw cheque image ######################
-    file = open(r'/home/rafsunsheikh/Desktop/signatureFraud/signatureFraud/detection/number.txt', 'r')
+    file = open(r'detection/number.txt', 'r')
     number = int(file.read())
     number = number - 1 
     file.close()
 
-    cheque_image_path = r'/home/rafsunsheikh/Desktop/signatureFraud/signatureFraud/static/cheque_image/myImage0.jpg'
+    cheque_image_path = r'static/cheque_image/myImage0.jpg'
 
     cheque_image = cv2.imread(cheque_image_path, cv2.IMREAD_COLOR)
     # cheque_image = cv2.flip(cheque_image, 1)
@@ -244,9 +244,9 @@ def check_signature(request):
     # set_save_directory = r'static/'
     # os.chdir(set_save_directory)
 
-    filename = 'savedImage.jpg'
+    # filename = 'savedImage.jpg'
     # cv2.imwrite(filename, crop_img)
-    cv2.imwrite(filename, cheque_image)
+    # cv2.imwrite(filename, cheque_image)
 
 ######################  Start checking #############################
     # image_path = r'static/savedImage.jpg'
@@ -259,17 +259,24 @@ def check_signature(request):
     x_image = image_array.reshape(-1, image_size, image_size, 3)
 
 
-    new_model = tf.keras.models.load_model(r'/home/rafsunsheikh/Desktop/signatureFraud/signatureFraud/static/my_model')
+    new_model = tf.keras.models.load_model(r'static/my_model')
     y_image_pred = new_model.predict(x_image)
     print("Y image pred:", y_image_pred)
-    y_image_pred = np.argmax(y_image_pred, axis = 1)
-    print("Y image pred final:", y_image_pred)
+    print("Y image pred 6 test:", y_image_pred[0][6])
+    y_image_pred_index = np.argmax(y_image_pred, axis = 1)
+    print("Y image pred final:", y_image_pred_index)
+    row = y_image_pred_index[0]
+    print("Y image pred 6 test with row:", y_image_pred[0][row])
+    print("Row:", row)
     # print(y_image_pred)
-    if y_image_pred == number:
+    if y_image_pred_index == number:
         messages.success(request, ' Signature does not matched!' )
-        return redirect('user')    
+        return redirect('index') 
+    elif y_image_pred[0][row] < 0.95:
+        messages.success(request, ' Signature does not matched!' )
+        return redirect('index') 
     else:
-        messages.success(request, ' Signature matched successfully with Person {}'.format(y_image_pred) )
+        messages.success(request, ' Signature matched successfully with Person {}'.format(y_image_pred_index) )
         return redirect('user')
 
 
